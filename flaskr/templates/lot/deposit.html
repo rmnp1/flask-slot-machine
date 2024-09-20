@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+
+{% block content %}
+    <h1><b> Deposit Page</b></h1>
+
+    <form action="{{ url_for('deposit') }}", method="POST">
+        <input type="number" name="deposit" placeholder="Deposit" required="required"><br>
+        <input type="submit" value="Confirm">
+
+    </form>
+{% endblock %}
