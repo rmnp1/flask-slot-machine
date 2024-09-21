@@ -1,4 +1,6 @@
-from flask import request, render_template, redirect, url_for
+from crypt import methods
+
+from flask import request, render_template, redirect, url_for, session
 from flask_login import login_user, logout_user, login_required, current_user
 
 from flaskr.models import User
@@ -59,3 +61,17 @@ def register_routes(app, db, bcrypt):
 
             db.session.commit()
         return redirect(url_for('index'))
+
+    @app.route('/play', methods=['GET', 'POST'])
+    @login_required
+    def play():
+        if request.method == "GET":
+            return render_template('lot/session.html')
+        elif request.method == "POST":
+            session['bet'] = int(request.form.get('bet'))
+            session['line'] = int(request.form.get('line'))
+
+            return render_template('lot/result.html', message=f"You bet {session['bet']}$ on {session['line']} lines")
+
+
+
