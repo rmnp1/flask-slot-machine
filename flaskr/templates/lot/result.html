@@ -3,10 +3,24 @@
 
 {% block content %}
     <h2 style="color: darkred"><b> {{ message }}</b></h2>
+    <form action="{{ url_for('result') }}" method="POST">
 
-    <form action="{{ url_for('play') }}" method="POST">
-        <input type="number" name="bet" placeholder="Bet" required="required" max="100" min="1"><br>
-        <input type="number" name="line" placeholder="Line" required="required" max="3" min="1"><br>
-        <input type="submit" value="Play">
+        <div class="slot-machine">
+            <table>
+                {% for row in slots %}
+                     <tr>
+                        {% for i in row %}
+                            <td>{{ i }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+        <button type="submit">Spin</button>
+
+        {% if win_message %}
+            <p><strong>{{ win_message }}</strong></p>
+        {% endif %}
     </form>
 {% endblock %}

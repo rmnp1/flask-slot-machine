@@ -1,4 +1,6 @@
+import random
 from crypt import methods
+import uuid
 
 from flask import request, render_template, redirect, url_for, session
 from flask_login import login_user, logout_user, login_required, current_user
@@ -6,7 +8,14 @@ from flask_login import login_user, logout_user, login_required, current_user
 from flaskr.models import User
 
 def register_routes(app, db, bcrypt):
-
+    symbols = ['🍒', '🍋', '🍊', '🍉', '⭐', '🔔']
+    symbol_value = { '🍒' : 6,
+                     '🍋' : 4,
+                     '🍊' : 3,
+                     '🍉' : 2,
+                     '⭐' : 3,
+                     '🔔' : 1
+    }
     @app.route("/")
     def index():
         return render_template('index.html')
@@ -57,7 +66,10 @@ def register_routes(app, db, bcrypt):
         elif request.method == "POST":
             deposit = int(request.form.get('deposit'))
 
-            current_user.deposit = current_user.deposit + deposit
+            if current_user.deposit:
+                current_user.deposit = current_user.deposit + deposit
+            else:
+                current_user.deposit = deposit
 
             db.session.commit()
         return redirect(url_for('index'))
@@ -70,8 +82,42 @@ def register_routes(app, db, bcrypt):
         elif request.method == "POST":
             session['bet'] = int(request.form.get('bet'))
             session['line'] = int(request.form.get('line'))
+            total_bet = session['bet'] * session['line']
 
-            return render_template('lot/result.html', message=f"You bet {session['bet']}$ on {session['line']} lines")
+            return render_template('lot/result.html', message=f"You bet {session['bet']}$ on {session['line']} lines. Total bet is equal to: ${total_bet}")
 
 
+
+    @app.route('/result', methods=['GET', 'POST'])
+    @login_required
+    def result():
+        winnings = 0
+        bet = session['bet']
+        bet_line = session['line']
+        total_bet = bet * bet_line
+        if request.method == "GET":
+            return render_template('lot/result.html')
+        elif request.method == "POST":
+            slots = [[random.choice(symbols) for _ in range(3)] for _ in range(3)]
+
+            session['slots'] = slots
+            winning_lines = []
+
+
+            message = f"You bet {bet}$ on {bet_line} lines. Total bet is equal to: ${total_bet}"
+
+            for index, line in enumerate(session['slots']):
+                if all(x == line[0] for x in line):
+                    winning_lines.append(index + 1)
+                    winnings += symbol_value[line[0]] * bet
+
+            if winning_lines:
+                win_message = f"You won {winnings} on lines: {', '.join(map(str, winning_lines))}"
+            else:
+                win_message = None
+            current_user.deposit = current_user.deposit - total_bet + winnings
+
+            db.session.commit()
+
+            return render_template('lot/result.html', slots=slots, message=message, win_message=win_message)
 
