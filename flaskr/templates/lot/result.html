@@ -23,4 +23,13 @@
             <p><strong>{{ win_message }}</strong></p>
         {% endif %}
     </form>
+    <form action="{{ url_for('play') }}" method="GET">
+        <input type="submit" value="Change the bet">
+    </form>
+{#    <form action="{{ url_for('play') }}">#}
+{#        {% if current_user.deposit < 0 %}#}
+{#            {% redirect %}#}
+{#        {% endif %}#}
+{#    </form>#}
+
 {% endblock %}

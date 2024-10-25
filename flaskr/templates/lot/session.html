@@ -2,10 +2,10 @@
 {% block title %}Index{% endblock %}
 
 {% block content %}
-    <h2 style="color: darkred"><b> PLease, write how much you want to bet on how much lines</b></h2>
+    <h2 style="color: darkred"><b>Please, write how much you want to bet on how much lines</b></h2>
 
     <form action="{{ url_for('play') }}" method="POST">
-        <input type="number" name="bet" placeholder="Bet" required="required" max="100" min="1" style="width: 100px"><br>
+        <input type="number" name="bet" placeholder="Bet" required="required"  min="1" style="width: 100px"><br>
         <input type="number" name="line" placeholder="Line" required="required" max="3" min="1" style="width: 100px"><br>
         <input type="submit" value="Play">
     </form>

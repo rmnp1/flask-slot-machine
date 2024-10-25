@@ -4,6 +4,7 @@ import uuid
 
 from flask import request, render_template, redirect, url_for, session
 from flask_login import login_user, logout_user, login_required, current_user
+from openpyxl.styles.builtins import total
 
 from flaskr.models import User
 
@@ -82,9 +83,8 @@ def register_routes(app, db, bcrypt):
         elif request.method == "POST":
             session['bet'] = int(request.form.get('bet'))
             session['line'] = int(request.form.get('line'))
-            total_bet = session['bet'] * session['line']
 
-            return render_template('lot/result.html', message=f"You bet {session['bet']}$ on {session['line']} lines. Total bet is equal to: ${total_bet}")
+            return redirect(url_for('result'))
 
 
 
@@ -96,13 +96,16 @@ def register_routes(app, db, bcrypt):
         bet_line = session['line']
         total_bet = bet * bet_line
         if request.method == "GET":
-            return render_template('lot/result.html')
+            message = f"You bet {bet}$ on {bet_line} lines. Total bet is equal to: ${total_bet}. Please, spin slot machine or change bet."
+
+            return render_template('lot/result.html', message=message)
         elif request.method == "POST":
+
+            total_bet = session['bet'] * session['line']
             slots = [[random.choice(symbols) for _ in range(3)] for _ in range(3)]
 
             session['slots'] = slots
             winning_lines = []
-
 
             message = f"You bet {bet}$ on {bet_line} lines. Total bet is equal to: ${total_bet}"
 
@@ -116,6 +119,9 @@ def register_routes(app, db, bcrypt):
             else:
                 win_message = None
             current_user.deposit = current_user.deposit - total_bet + winnings
+
+            if current_user.deposit < total_bet:
+                return render_template('lot/deposit.html', message="Your deposit is lower than your bet. Please deposit more to play.")
 
             db.session.commit()
 
