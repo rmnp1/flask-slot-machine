@@ -2,17 +2,23 @@
 {% block title %}Index{% endblock %}
 
 {% block content %}
-    <h1><b>Slot Machine</b></h1>
-    {% if current_user.is_authenticated %}
-        <h3>Hello {{ current_user.username }}, your deposit is {{ current_user.deposit }}</h3>
-    {% else %}
-        <h3>Hello!</h3>
-    {% endif %}
-
-    <a href="{{ url_for('signup') }}">Sign Up</a><br>
-    <a href="{{ url_for('login') }}">Login</a><br>
-    <a href="{{ url_for('logout') }}">Logout</a><br>
-    <a href="{{ url_for('deposit') }}">Deposit</a><br>
-    <a href="{{ url_for('play') }}">Play</a><br>
-
+    <footer class="footer">
+        <h1 id="index"><b>Slot Machine</b></h1>
+        <div class="menu">
+            <a href="{{ url_for('play') }}">Play</a>
+            <a href="{{ url_for('deposit') }}">Deposit</a>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('signup') }}">Sign Up</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </footer>
+   <div class="base" style="margin: 0">
+        <div class="start_text">
+            {% if current_user.is_authenticated %}
+                <h3>Hello {{ current_user.username }}, your deposit is {{ current_user.deposit }}</h3>
+            {% else %}
+                <h3>Hello! Please log in to play or deposit.</h3>
+            {% endif %}
+        </div>
+   </div>
 {% endblock %}

@@ -17,6 +17,8 @@ def register_routes(app, db, bcrypt):
                      '⭐' : 3,
                      '🔔' : 1
     }
+
+
     @app.route("/")
     def index():
         return render_template('index.html')
@@ -38,6 +40,7 @@ def register_routes(app, db, bcrypt):
             db.session.commit()
             return redirect(url_for('index'))
 
+
     @app.route("/login", methods=["GET", "POST"])
     def login():
         if request.method == "GET":
@@ -48,16 +51,20 @@ def register_routes(app, db, bcrypt):
 
             user = User.query.filter(User.username == username).first()
 
+            if user is None:
+                return "User not found. Sign in."
+
             if bcrypt.check_password_hash(user.password, password):
                 login_user(user)
                 return redirect(url_for('index'))
             else:
-                return 'Failed'
+                return 'Invalid username or password'
 
     @app.route("/logout")
     def logout():
         logout_user()
         return redirect(url_for('index'))
+
 
     @app.route('/deposit', methods=["GET", "POST"])
     @login_required
@@ -75,6 +82,7 @@ def register_routes(app, db, bcrypt):
             db.session.commit()
         return redirect(url_for('index'))
 
+
     @app.route('/play', methods=['GET', 'POST'])
     @login_required
     def play():
@@ -87,7 +95,6 @@ def register_routes(app, db, bcrypt):
             return redirect(url_for('result'))
 
 
-
     @app.route('/result', methods=['GET', 'POST'])
     @login_required
     def result():
@@ -95,17 +102,19 @@ def register_routes(app, db, bcrypt):
         bet = session['bet']
         bet_line = session['line']
         total_bet = bet * bet_line
+        info = symbol_value.items()
+
         if request.method == "GET":
-            message = f"You bet {bet}$ on {bet_line} lines. Total bet is equal to: ${total_bet}. Please, spin slot machine or change bet."
-
-            return render_template('lot/result.html', message=message)
+            message = f"You bet ${bet} on {bet_line} lines. The total bet is: ${total_bet}. Now you can spin the slot machine or change your bet."
+            return render_template('lot/result.html', message=message, info=info)
         elif request.method == "POST":
-
             total_bet = session['bet'] * session['line']
             slots = [[random.choice(symbols) for _ in range(3)] for _ in range(3)]
 
             session['slots'] = slots
             winning_lines = []
+
+
 
             message = f"You bet {bet}$ on {bet_line} lines. Total bet is equal to: ${total_bet}"
 
@@ -115,15 +124,15 @@ def register_routes(app, db, bcrypt):
                     winnings += symbol_value[line[0]] * bet
 
             if winning_lines:
-                win_message = f"You won {winnings} on lines: {', '.join(map(str, winning_lines))}"
+                win_message = f"You won {winnings}$ \n on line: {', '.join(map(str, winning_lines))}"
             else:
                 win_message = None
             current_user.deposit = current_user.deposit - total_bet + winnings
 
             if current_user.deposit < total_bet:
-                return render_template('lot/deposit.html', message="Your deposit is lower than your bet. Please deposit more to play.")
+                return render_template('lot/deposit.html', message="Your deposit is lower than your bet. Please deposit more to play.", info=info)
 
             db.session.commit()
 
-            return render_template('lot/result.html', slots=slots, message=message, win_message=win_message)
+            return render_template('lot/result.html', slots=slots, message=message, win_message=win_message, info=info)
 

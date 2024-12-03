@@ -2,34 +2,54 @@
 {% block title %}Index{% endblock %}
 
 {% block content %}
-    <h2 style="color: darkred"><b> {{ message }}</b></h2>
-    <form action="{{ url_for('result') }}" method="POST">
 
-        <div class="slot-machine">
-            <table>
-                {% for row in slots %}
-                     <tr>
-                        {% for i in row %}
-                            <td>{{ i }}</td>
+    <footer class="footer" >
+        <h1><b>Slot Machine</b></h1>
+        <h3>{{ message }}</h3>
+    </footer>
+    <div class="base">
+        <aside class="values">
+                <p id="values">VALUES OF SYMBOLS:</p>
+                <div id="info">
+                    |{% for i, v in info %}
+                        {{ i }} : {{ v }}x |
+                    {% endfor %}
+                </div>
+    </aside>
+        <div class="lot">
+
+            <form action="{{ url_for('result') }}" method="POST">
+
+                <div class="slot-machine">
+                    <table>
+                        {% for row in slots %}
+                            <tr>
+                                {% for i in row %}
+                                    <td>{{ i }}</td>
+                                {% endfor %}
+                            </tr>
                         {% endfor %}
-                    </tr>
-                {% endfor %}
-            </table>
+                    </table>
+                </div>
 
+                <input type="submit" value="Spin" style="width: 50px; margin: 0 28px">
+
+                {% if win_message %}
+                    <p style="margin-top: 10px">{{ win_message }}</p>
+                {% endif %}
+            </form>
         </div>
-        <button type="submit">Spin</button>
+        <div class="buttons">
+            <form action="{{ url_for('play') }}" method="GET">
+                <input type="submit" value="Change the bet">
+            </form>
+            <form action="{{ url_for('index') }}" method="GET">
+                <input type="submit" value="Back to menu">
+            </form>
+        </div>
 
-        {% if win_message %}
-            <p><strong>{{ win_message }}</strong></p>
-        {% endif %}
-    </form>
-    <form action="{{ url_for('play') }}" method="GET">
-        <input type="submit" value="Change the bet">
-    </form>
-{#    <form action="{{ url_for('play') }}">#}
-{#        {% if current_user.deposit < 0 %}#}
-{#            {% redirect %}#}
-{#        {% endif %}#}
-{#    </form>#}
+    </div>
+
+
 
 {% endblock %}
