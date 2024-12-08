@@ -124,7 +124,7 @@ def register_routes(app, db, bcrypt):
                     winnings += symbol_value[line[0]] * bet
 
             if winning_lines:
-                win_message = f"You won {winnings}$ \n on line: {', '.join(map(str, winning_lines))}"
+                win_message = f"You won {winnings}$ on line: {', '.join(map(str, winning_lines))}"
             else:
                 win_message = None
             current_user.deposit = current_user.deposit - total_bet + winnings

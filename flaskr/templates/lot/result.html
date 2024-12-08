@@ -32,21 +32,25 @@
                     </table>
                 </div>
 
-                <input type="submit" value="Spin" style="width: 50px; margin: 0 28px">
+                <input type="submit" value="SPIN" style="width: 171px; height: 50px; font-size: xx-large; background-color: green;">
 
-                {% if win_message %}
-                    <p style="margin-top: 10px">{{ win_message }}</p>
-                {% endif %}
+
             </form>
+
         </div>
-        <div class="buttons">
+            {% if win_message %}
+                <p style="margin-top: 10px; background-color: #bf0101; padding: 4px; border-radius: 5px;">{{ win_message }}</p>
+            {% elif win_message == None %}
+                <p style="margin-top: 10px">Don't worry, try again</p>
+            {% endif %}
+            <div class="buttons">
             <form action="{{ url_for('play') }}" method="GET">
                 <input type="submit" value="Change the bet">
             </form>
             <form action="{{ url_for('index') }}" method="GET">
                 <input type="submit" value="Back to menu">
             </form>
-        </div>
+            </div>
 
     </div>
 
