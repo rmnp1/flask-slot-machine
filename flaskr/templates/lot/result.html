@@ -19,7 +19,7 @@
         <div class="lot">
 
             <form action="{{ url_for('result') }}" method="POST">
-
+                {# Visual output of the slot machine in the form of a table. #}
                 <div class="slot-machine">
                     <table>
                         {% for row in slots %}
@@ -38,6 +38,7 @@
             </form>
 
         </div>
+            {# Interaction of the slot machine's winning spin with the display of a win message. #}
             {% if win_message %}
                 <p style="margin-top: 10px; background-color: #bf0101; padding: 4px; border-radius: 5px;">{{ win_message }}</p>
             {% elif win_message == None %}

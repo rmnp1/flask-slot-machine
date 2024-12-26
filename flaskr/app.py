@@ -11,11 +11,11 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user.db'
     app.secret_key = "SOME KEY"
 
-
     db.init_app(app)
     login_manager = LoginManager()
     login_manager.init_app(app)
 
+    # Unregistered user processing
     from flaskr.models import User
 
     @login_manager.user_loader
@@ -31,6 +31,7 @@ def create_app():
     from flaskr.routes import register_routes
     register_routes(app, db, bcrypt)
 
+    # Initialize database migration tool
     migrate = Migrate(app, db, command='db')
 
     return app

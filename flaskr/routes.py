@@ -9,6 +9,7 @@ from openpyxl.styles.builtins import total
 from flaskr.models import User
 
 def register_routes(app, db, bcrypt):
+    # Register the slot machine values
     symbols = ['🍒', '🍋', '🍊', '🍉', '⭐', '🔔']
     symbol_value = { '🍒' : 6,
                      '🍋' : 4,
@@ -29,6 +30,7 @@ def register_routes(app, db, bcrypt):
         if request.method == "GET":
             return render_template('auth/signup.html')
         elif request.method == "POST":
+            # Creating new user in database
             username = request.form.get('username')
             password = request.form.get('password')
 
@@ -51,6 +53,7 @@ def register_routes(app, db, bcrypt):
 
             user = User.query.filter(User.username == username).first()
 
+            # Check for existing of user
             if user is None:
                 return "User not found. Sign in."
 
@@ -74,6 +77,7 @@ def register_routes(app, db, bcrypt):
         elif request.method == "POST":
             deposit = int(request.form.get('deposit'))
 
+            # Deposit update by user
             if current_user.deposit:
                 current_user.deposit = current_user.deposit + deposit
             else:
@@ -109,15 +113,15 @@ def register_routes(app, db, bcrypt):
             return render_template('lot/result.html', message=message, info=info)
         elif request.method == "POST":
             total_bet = session['bet'] * session['line']
-            slots = [[random.choice(symbols) for _ in range(3)] for _ in range(3)]
+            slots = [[random.choice(symbols) for _ in range(3)] for _ in range(3)] # Random generation of slot machine values
 
             session['slots'] = slots
             winning_lines = []
 
-
-
             message = f"You bet {bet}$ on {bet_line} lines. Total bet is equal to: ${total_bet}"
 
+            # Check for winning lines in generated slot machine
+            # and the winnings are updated based on the symbol's value multiplied by the bet amount.
             for index, line in enumerate(session['slots']):
                 if all(x == line[0] for x in line):
                     winning_lines.append(index + 1)
@@ -127,12 +131,14 @@ def register_routes(app, db, bcrypt):
                 win_message = f"You won {winnings}$ on line: {', '.join(map(str, winning_lines))}"
             else:
                 win_message = None
+
+            # Adjust the user's deposit balance
             current_user.deposit = current_user.deposit - total_bet + winnings
 
             if current_user.deposit < total_bet:
-                return render_template('lot/deposit.html', message="Your deposit is lower than your bet. Please deposit more to play.", info=info)
+                return render_template('lot/deposit.html', message="Your deposit is lower than your bet. Please deposit more to play.")
 
-            db.session.commit()
+            db.session.commit() # Recording all changes made to the database
 
             return render_template('lot/result.html', slots=slots, message=message, win_message=win_message, info=info)
 
