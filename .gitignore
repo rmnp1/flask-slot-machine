@@ -1,7 +1,7 @@
 # created by virtualenv automatically
 flaskr/.venv/bin
 flaskr/.venv/
-flaskr/.idea/
+.idea/
 *.pyc
 __pycache__/
 

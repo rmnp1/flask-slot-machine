@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9557449b-8a2f-491e-9ea9-d9ef9a206832" name="Changes" comment="correct .gitignore">
+    <list default="true" id="9557449b-8a2f-491e-9ea9-d9ef9a206832" name="Changes" comment="Restructure project">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flaskr/temp.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,7 +196,7 @@
       <workItem from="1735404975397" duration="7227000" />
       <workItem from="1735789868281" duration="2000" />
       <workItem from="1735793953032" duration="324000" />
-      <workItem from="1736103943419" duration="11175000" />
+      <workItem from="1736103943419" duration="13504000" />
     </task>
     <task id="LOCAL-00001" summary="add generation of slot machine, add winnings&#10;&#10;&#10;random generation of matrix-like slot machine, added determining the winning line">
       <option name="closed" value="true" />
@@ -253,7 +254,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736258995966</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Restructure project">
+      <option name="closed" value="true" />
+      <created>1736259415200</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1736259415200</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -288,7 +297,8 @@
     <MESSAGE value="Add comments, organise style.css" />
     <MESSAGE value="Create and fill README.md" />
     <MESSAGE value="correct .gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="correct .gitignore" />
+    <MESSAGE value="Restructure project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Restructure project" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/slot_machine$run.coverage" NAME="run Coverage Results" MODIFIED="1735794025719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/flaskr" />
