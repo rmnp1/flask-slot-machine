@@ -1,7 +1,7 @@
 # created by virtualenv automatically
-bin
+flaskr/.venv/bin
 .venv/
-
+.idea/
 *.pyc
 __pycache__/
 
@@ -11,6 +11,7 @@ instance/
 .coverage
 htmlcov/
 
+migrations/
 dist/
 build/
 *.egg-info/
