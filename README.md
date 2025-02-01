@@ -11,7 +11,7 @@ A simple web-based slot machine that simulates the mechanics of a traditional sl
 - Automatic detection and display of winnings.
 
 ### Demonstration
-[Watch the project demonstration on YouTube](https://youtu.be/7TvXGQN-oVA)
+**[Watch the project demonstration on YouTube](https://youtu.be/7TvXGQN-oVA)**
 
 ---
 
@@ -30,26 +30,22 @@ A simple web-based slot machine that simulates the mechanics of a traditional sl
    cd slot_machine
    ```
 
-2. **Install dependencies:**
+2. **Initialize the project and install dependencies**
    ```bash
-   pip install flask flask-sqlalchemy flask-migrate
+   uv init
+   uv add flask flask-sqlalchemy flask-migrate
    ```
 
-3. **Set up a virtual environment (optional):**
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate  # For Linux/MacOS
-   .venv\Scripts\activate    # For Windows
-   ```
 
-4. **Initialize and migrate the database:**
+
+3. **Initialize and migrate the database:**
    ```bash
    flask db init
    flask db migrate
    flask db upgrade
    ```
 
-5. **Run the application:**
+4. **Run the application:**
    ```bash
    python run.py
    ```
