@@ -18,9 +18,7 @@ A simple web-based slot machine that simulates the mechanics of a traditional sl
 ## How to Run the Project
 
 ### Prerequisites:
-- Python 3.8+
-- pip (Python package installer)
-- A virtual environment (optional but recommended)
+- can find in [pyproject.toml](https://github.com/rmnp1/flask-slot-machine/blob/2d03e9ac65e6b849da6a5352df3cf7641cdf18c1/pyproject.toml)
 
 ### Steps:
 

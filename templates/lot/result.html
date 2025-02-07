@@ -18,7 +18,7 @@
     </aside>
         <div class="lot">
 
-            <form action="{{ url_for('result') }}" method="POST">
+            <form action="{{ url_for('page.result') }}" method="POST">
                 {# Visual output of the slot machine in the form of a table. #}
                 <div class="slot-machine">
                     <table>
@@ -45,10 +45,10 @@
                 <p style="margin-top: 10px">Don't worry, try again</p>
             {% endif %}
             <div class="buttons">
-            <form action="{{ url_for('play') }}" method="GET">
+            <form action="{{ url_for('page.play') }}" method="GET">
                 <input type="submit" value="Change the bet">
             </form>
-            <form action="{{ url_for('index') }}" method="GET">
+            <form action="{{ url_for('page.index') }}" method="GET">
                 <input type="submit" value="Back to menu">
             </form>
             </div>
