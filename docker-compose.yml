@@ -1,17 +1,16 @@
-version: '3.8'
+version: '3.8'  # Docker Compose version
 
 services:
   app:
-    build: .
+    build: .  # Build from current directory
     ports:
-      - "5000:5000"
+      - "5001:5000"
     volumes:
-      - sqlite_data:/app/data
+      - sqlite_data:/app/data  # Persist SQLite data
     environment:
-      - FLASK_ENV=development
-      - FLASK_APP=app.py
-    restart: always
-
+      - FLASK_ENV=development  # Set Flask environment to development mode
+      - FLASK_APP=app.py  # Define the main Flask application file
+    restart: always  # Auto-restart on failure
 
 volumes:
-  sqlite_data:
+  sqlite_data:  # Named volume for data persistence
