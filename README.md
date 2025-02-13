@@ -45,12 +45,48 @@ A simple web-based slot machine that simulates the mechanics of a traditional sl
 
 4. **Run the application:**
    ```bash
-   python run.py
+    flask run -h 0.0.0.0 -p 5001 
    ```
-   The port can be modified in the `run.py` file.
+   The port can be modified.
 
 ---
 
 ## Notes
 - Ensure the database configurations are correctly set up in `app.py`.
 
+
+---
+
+## Running the Project with Docker
+
+This project uses Docker for containerization. Before starting, make sure you have Docker installed.
+
+### Requirements
+
+- [Docker](https://docs.docker.com/get-docker/)
+
+### Setup and Run Instructions
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/rmnp1/flask-slot-machine.git
+   cd slot_machine
+   ```
+
+2. Start the container:
+   ```sh
+   docker-compose up --build
+   ```
+
+This command will build the images (if they do not exist) and start the containers as defined in the `docker-compose.yml` file.
+
+### Stopping the Containers
+
+To stop the containers, press `Ctrl+C` or use the command:
+```sh
+docker-compose down
+```
+
+If necessary, you can remove the stored container data with:
+```sh
+docker-compose down -v
